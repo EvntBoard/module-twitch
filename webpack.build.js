@@ -4,8 +4,6 @@ module.exports = {
     entry: './src/index.ts',
     target: 'node',
     externalsPresets: { node: true },
-    // Workaround for ws module trying to require devDependencies
-    externals: ['utf-8-validate', 'bufferutil'],
     module: {
         rules: [
             {

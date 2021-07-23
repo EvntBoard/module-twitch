@@ -1,5 +1,5 @@
 import process from 'process';
-import { EvntComClient, EvntComServer } from "evntboard-communicate";
+import { getEvntComClientFromChildProcess, getEvntComServerFromChildProcess } from "evntboard-communicate";
 import {ChatClient} from '@twurple/chat';
 import {PubSubClient, PubSubListener} from "@twurple/pubsub";
 import {ApiClient, HelixPrivilegedUser} from '@twurple/api';
@@ -10,20 +10,8 @@ import { ETwitchEvent } from './ETwitchEvent';
 const { name: NAME, customName: CUSTOM_NAME, config: { clientId: CLIENT_ID, token: TOKEN } } = JSON.parse(process.argv[2]);
 const EMITTER = CUSTOM_NAME || NAME;
 
-// create Client and Server COM
-const evntComClient = new EvntComClient(
-    (cb: any) => process.on('message', cb),
-    (data: any) => process.send(data),
-);
-
-const evntComServer = new EvntComServer();
-
-evntComServer.registerOnData((cb: any) => process.on('message', async (data) => {
-    const toSend = await cb(data);
-    if (toSend) process.send(toSend);
-}));
-
-//
+const evntComClient = getEvntComClientFromChildProcess();
+const evntComServer = getEvntComServerFromChildProcess();
 
 let chatClient: ChatClient;
 let pubSubClient: PubSubClient;
