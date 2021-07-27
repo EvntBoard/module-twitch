@@ -318,18 +318,53 @@ const tryReconnect = () => {
     setTimeout(() => load(), waintingTime);
 }
 
+evntComServer.expose("newEvent", onNewEvent);
+evntComServer.expose("load", load);
+evntComServer.expose("unload", unload);
+evntComServer.expose("reload", reload);
+
+// chat API
+
 const say = (message: string) => chatClient?.say(currentUser.name, message);
 
 const me = (message: string) => chatClient?.action(currentUser.name, message);
 
 const whisp = (user: string, message: string) => chatClient?.whisper(user, message);
 
-// EXPOSE
-
-evntComServer.expose("newEvent", onNewEvent);
-evntComServer.expose("load", load);
-evntComServer.expose("unload", unload);
-evntComServer.expose("reload", reload);
 evntComServer.expose("say", say)
 evntComServer.expose("me", me)
 evntComServer.expose("whisp", whisp)
+
+// Helix Channel
+
+const channelGetChannelEditors = async () => {
+    return await apiClient.helix.channels.getChannelEditors(currentUser.id);
+}
+
+const channelGetInfo = async () => {
+    return await apiClient.helix.channels.getChannelInfo(currentUser.id);
+}
+
+const channelUpdateTitle = async (title: string) => {
+    return await apiClient.helix.channels.updateChannelInfo(currentUser.id, { title })
+};
+
+const channelUpdateGame = async (game: string) => {
+    let gameObj = await apiClient.helix.games.getGameByName(game)
+    return await apiClient.helix.channels.updateChannelInfo(currentUser.id, { gameId: gameObj?.id || game })
+};
+
+const channelUpdateLanguage = async (language: string) => {
+    return await apiClient.helix.channels.updateChannelInfo(currentUser.id, { language })
+};
+
+const channelStartCommercial = async (duration: 30 | 60 | 90 | 120 | 150 | 180) => {
+    return await apiClient.helix.channels.startChannelCommercial(currentUser.id, duration)
+};
+
+evntComServer.expose("channelGetInfo", channelGetInfo)
+evntComServer.expose("channelGetChannelEditors", channelGetChannelEditors)
+evntComServer.expose("channelUpdateTitle", channelUpdateTitle)
+evntComServer.expose("channelUpdateGame", channelUpdateGame)
+evntComServer.expose("channelUpdateLanguage", channelUpdateLanguage)
+evntComServer.expose("channelStartCommercial", channelStartCommercial)
