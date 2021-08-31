@@ -1,7 +1,6 @@
 name: Module Twitch
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - "v*.*.*"
