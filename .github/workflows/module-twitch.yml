@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     tags:
-    - "v*"
+      - "v*.*.*"
 
 jobs:
   module-twitch:
@@ -12,32 +12,27 @@ jobs:
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v1
         with:
           node-version: 12
 
-      - name: Install
-        run: |
-          yarn cache clean
-          yarn install --network-timeout 1000000
-
       - name: Build
-        run: yarn build
-
-      - name: Compress
         run: |
-          cd ./dist
-          npx bestzip ../module-twitch.zip ./*
+          yarn
+          yarn build
 
-      - name: Upload
-        uses: bayssmekanique/action-simple-file-upload@v1
+      - name: Pack
+        run: |
+          cd dist
+          npx bestzip ../module-twitch.zip .
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          user: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          host: ${{ secrets.FTP_HOST }}
-          port: ${{ secrets.FTP_PORT }}
-          src: ./module-twitch.zip
-          dest: ./builds/${{ github.sha }}/modules/module-twitch.zip
+          draft: true
+          files: |
+            *.zip
