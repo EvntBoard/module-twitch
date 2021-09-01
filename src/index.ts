@@ -91,6 +91,7 @@ const load = async () => {
     chatClient.onMessage(async (channel, _, message, msg) => {
         await evntComClient?.newEvent(ETwitchEvent.MESSAGE, {
             id: msg.id,
+            msgId: msg.tags.get('msg-id'),
             isCheer: msg.isCheer,
             bits: msg.bits,
             message,
