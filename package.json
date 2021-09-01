@@ -1,6 +1,6 @@
 {
   "name": "module-twitch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "bin": "dist/index.js",
@@ -14,10 +14,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@twurple/api": "^5.0.0-pre.11",
-    "@twurple/auth": "^5.0.0-pre.11",
-    "@twurple/chat": "^5.0.0-pre.11",
-    "@twurple/pubsub": "^5.0.0-pre.11",
+    "@twurple/api": "^5.0.0-pre.15",
+    "@twurple/auth": "^5.0.0-pre.15",
+    "@twurple/chat": "^5.0.0-pre.15",
+    "@twurple/pubsub": "^5.0.0-pre.15",
     "bufferutil": "^4.0.3",
     "evntboard-communicate": "https://github.com/EvntBoard/communicate.git",
     "lodash": "^4.17.21",
