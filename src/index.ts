@@ -44,7 +44,7 @@ const load = async () => {
 
     currentUser = await apiClient.helix.users.getMe(false)
 
-    chatClient = new ChatClient(authProvider, { webSocket:true, channels: [currentUser.name], isAlwaysMod: true });
+    chatClient = new ChatClient( { webSocket:true, channels: [currentUser.name], isAlwaysMod: true, authProvider });
 
     chatClient.onConnect(() => {
         evntComClient?.newEvent(ETwitchEvent.OPEN, null, { emitter: EMITTER })
