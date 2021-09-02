@@ -42,9 +42,9 @@ const load = async () => {
     pubSubClient = new PubSubClient()
     await pubSubClient.registerUserListener(authProvider)
 
-    currentUser = await apiClient.helix.users.getMe(false)
+    currentUser = await apiClient.users.getMe(false)
 
-    chatClient = new ChatClient( { webSocket:true, channels: [currentUser.name], isAlwaysMod: true, authProvider });
+    chatClient = new ChatClient( { webSocket: true, channels: [currentUser.name], isAlwaysMod: true, authProvider });
 
     chatClient.onConnect(() => {
         evntComClient?.newEvent(ETwitchEvent.OPEN, null, { emitter: EMITTER })
@@ -326,7 +326,7 @@ evntComServer.expose("reload", reload);
 
 // chat API
 
-const say = (message: string) => chatClient?.say(currentUser.name, message);
+const say = (message: string, reply: string) => chatClient?.say(currentUser.name, message, { replyTo: reply });
 
 const me = (message: string) => chatClient?.action(currentUser.name, message);
 
@@ -339,28 +339,28 @@ evntComServer.expose("whisp", whisp)
 // Helix Channel
 
 const channelGetChannelEditors = async () => {
-    return await apiClient.helix.channels.getChannelEditors(currentUser.id);
+    return await apiClient.channels.getChannelEditors(currentUser.id);
 }
 
 const channelGetInfo = async () => {
-    return await apiClient.helix.channels.getChannelInfo(currentUser.id);
+    return await apiClient.channels.getChannelInfo(currentUser.id);
 }
 
 const channelUpdateTitle = async (title: string) => {
-    return await apiClient.helix.channels.updateChannelInfo(currentUser.id, { title })
+    return await apiClient.channels.updateChannelInfo(currentUser.id, { title })
 };
 
 const channelUpdateGame = async (game: string) => {
-    let gameObj = await apiClient.helix.games.getGameByName(game)
-    return await apiClient.helix.channels.updateChannelInfo(currentUser.id, { gameId: gameObj?.id || game })
+    let gameObj = await apiClient.games.getGameByName(game)
+    return await apiClient.channels.updateChannelInfo(currentUser.id, { gameId: gameObj?.id || game })
 };
 
 const channelUpdateLanguage = async (language: string) => {
-    return await apiClient.helix.channels.updateChannelInfo(currentUser.id, { language })
+    return await apiClient.channels.updateChannelInfo(currentUser.id, { language })
 };
 
 const channelStartCommercial = async (duration: 30 | 60 | 90 | 120 | 150 | 180) => {
-    return await apiClient.helix.channels.startChannelCommercial(currentUser.id, duration)
+    return await apiClient.channels.startChannelCommercial(currentUser.id, duration)
 };
 
 evntComServer.expose("channelGetInfo", channelGetInfo)
