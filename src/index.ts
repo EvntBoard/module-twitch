@@ -363,9 +363,26 @@ const channelStartCommercial = async (duration: 30 | 60 | 90 | 120 | 150 | 180) 
     return await apiClient.channels.startChannelCommercial(currentUser.id, duration)
 };
 
+const usersGetUserByName = async (user: string) => {
+    const data = await apiClient.users.getUserByName(user)
+    return {
+        broadcasterType: data.broadcasterType,
+        creationDate: data.creationDate,
+        description: data.description,
+        displayName: data.displayName,
+        id: data.id,
+        name: data.name,
+        offlinePlaceholderUrl: data.offlinePlaceholderUrl,
+        profilePictureUrl: data.profilePictureUrl,
+        type: data.type,
+        views: data.views,
+    }
+};
+
 evntComServer.expose("channelGetInfo", channelGetInfo)
 evntComServer.expose("channelGetChannelEditors", channelGetChannelEditors)
 evntComServer.expose("channelUpdateTitle", channelUpdateTitle)
 evntComServer.expose("channelUpdateGame", channelUpdateGame)
 evntComServer.expose("channelUpdateLanguage", channelUpdateLanguage)
 evntComServer.expose("channelStartCommercial", channelStartCommercial)
+evntComServer.expose("usersGetUserByName", usersGetUserByName)
