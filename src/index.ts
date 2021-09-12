@@ -1,9 +1,10 @@
 import process from 'process';
 import { getEvntComClientFromChildProcess, getEvntComServerFromChildProcess } from "evntboard-communicate";
-import {ChatClient} from '@twurple/chat';
-import {PubSubClient, PubSubListener} from "@twurple/pubsub";
-import {ApiClient, HelixPrivilegedUser} from '@twurple/api';
-import {StaticAuthProvider} from '@twurple/auth';
+import { ChatClient } from '@twurple/chat';
+import { PubSubClient, PubSubListener } from "@twurple/pubsub";
+import { ApiClient, HelixPrivilegedUser } from '@twurple/api';
+import { StaticAuthProvider } from '@twurple/auth';
+import { getRawData } from '@twurple/common';
 import { ETwitchEvent } from './ETwitchEvent';
 
 // parse params
@@ -343,7 +344,7 @@ const channelGetChannelEditors = async () => {
 }
 
 const channelGetInfo = async () => {
-    return await apiClient.channels.getChannelInfo(currentUser.id);
+    return getRawData(await apiClient.channels.getChannelInfo(currentUser.id));
 }
 
 const channelUpdateTitle = async (title: string) => {
@@ -364,19 +365,7 @@ const channelStartCommercial = async (duration: 30 | 60 | 90 | 120 | 150 | 180) 
 };
 
 const usersGetUserByName = async (user: string) => {
-    const data = await apiClient.users.getUserByName(user)
-    return {
-        broadcasterType: data.broadcasterType,
-        creationDate: data.creationDate,
-        description: data.description,
-        displayName: data.displayName,
-        id: data.id,
-        name: data.name,
-        offlinePlaceholderUrl: data.offlinePlaceholderUrl,
-        profilePictureUrl: data.profilePictureUrl,
-        type: data.type,
-        views: data.views,
-    }
+    return getRawData(await apiClient.users.getUserByName(user))
 };
 
 evntComServer.expose("channelGetInfo", channelGetInfo)
