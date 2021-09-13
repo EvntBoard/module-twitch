@@ -1857,19 +1857,6 @@ pkg-fetch@3.2.2:
     semver "^7.3.5"
     yargs "^16.2.0"
 
-pkg-fetch@^3.2.2:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/pkg-fetch/-/pkg-fetch-3.2.3.tgz#9825febf4eadd470c126d3f6bdc2cb6996861d36"
-  integrity sha512-bv9vYANgAZ2Lvxn5Dsq7E0rLqzcqYkV4gnwe2f7oHV9N4SVMfDOIjjFCRuuTltop5EmsOcu7XkQpB5A/pIgC1g==
-  dependencies:
-    chalk "^4.1.0"
-    fs-extra "^9.1.0"
-    https-proxy-agent "^5.0.0"
-    node-fetch "^2.6.1"
-    progress "^2.0.3"
-    semver "^7.3.5"
-    yargs "^16.2.0"
-
 pkg@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/pkg/-/pkg-5.3.1.tgz#8f81671613b9e5bb1d83c39b2eed4799e1e679fe"
