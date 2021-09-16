@@ -19,9 +19,6 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install wine
-        run: sudo apt install wine wine64
-
       - name: Build
         run: |
           yarn
