@@ -37,7 +37,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           cd ./dist/
-          npx bestzip ../../module-twitch.zip .
+          npx bestzip ../module-twitch.zip .
 
       - name: Release
         uses: softprops/action-gh-release@v1
