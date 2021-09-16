@@ -16,7 +16,6 @@ export interface IConfig {
 export class ConfigLoader {
   private _config: IConfig = {
     config: {
-      name: "twitch",
       clientId: "sample clientId",
       accessToken: "sample accessToken",
     },
